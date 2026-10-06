@@ -7,6 +7,11 @@
 #   curl -fsSL <public-url>/setup.sh | bash
 set -euo pipefail
 
+# Piped through `curl | bash`, bash reads the script from stdin as it runs, and
+# the `exec < /dev/tty` below would make it read the remaining lines from the
+# keyboard — a silent hang. Inside a block, bash parses everything first.
+{
+
 REPO="DiscenTech/pelion"
 DIR="${PELION_DIR:-$HOME/pelion}"
 
@@ -18,8 +23,7 @@ if [ "$(uname -s)" != "Darwin" ]; then
   exit 1
 fi
 
-# Piped through `curl | bash`, stdin is the script itself: prompts (sudo, gh
-# login) must read from the terminal instead.
+# Prompts (sudo, gh login) must read from the terminal, not from the pipe.
 exec < /dev/tty
 
 if ! xcode-select -p >/dev/null 2>&1; then
@@ -61,3 +65,5 @@ if [ ! -d "$DIR/.git" ]; then
 fi
 
 exec bash "$DIR/scripts/bootstrap.sh"
+
+}
