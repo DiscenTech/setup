@@ -22,7 +22,8 @@ chiedere. Non mostrare token o contenuti di `.env` in chat.
 
 Senza installare niente, controlla e riassumi in una tabella breve:
 
-- `sw_vers -productVersion` (deve essere macOS) e `uname -m`
+- `sw_vers -productVersion` (deve essere macOS) e `sysctl -n hw.optional.arm64`
+  (`1` vuol dire Apple Silicon)
 - `xcode-select -p` — strumenti di Apple (contengono git)
 - `brew --version` — Homebrew (cerca anche `/opt/homebrew/bin/brew` e `/usr/local/bin/brew`)
 - `gh auth status` — GitHub CLI e login
@@ -68,6 +69,11 @@ di avvisare chi le ha mandato queste istruzioni.
 
 Leggi l'errore prima di proporre altro. I casi noti:
 
+- **macOS troppo vecchio o Mac Intel** — gli script si fermano subito e
+  dicono perché. Fermati anche tu: spiegale il messaggio e, se si tratta di
+  aggiornare macOS, falle fare l'aggiornamento e rilancia. Non aggirarlo
+  scaricando a mano gli strumenti (fnm, mise, Docker): su quel Mac Homebrew e
+  Docker Desktop non sono supportati, e il setup si romperebbe più avanti.
 - **porta 5432 già occupata** — c'è un altro Postgres sul Mac (spesso
   installato con Homebrew): chiedi prima di fermarlo (`brew services stop postgresql`).
 - **Docker non risponde** — va aperto dalle Applicazioni e lasciato partire.

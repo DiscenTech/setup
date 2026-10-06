@@ -23,6 +23,28 @@ if [ "$(uname -s)" != "Darwin" ]; then
   exit 1
 fi
 
+# Below Homebrew's Tier 1 there are no bottles: every formula builds from
+# source, for hours, with no sign of progress. Tier 1 is Apple Silicon on the
+# current macOS and the two before it — the same window Docker Desktop
+# supports. Bump MIN_MACOS when a new macOS ships; scripts/setup.sh and
+# scripts/bootstrap.sh carry the same check.
+MIN_MACOS=15
+if [ "$(sysctl -n hw.optional.arm64 2>/dev/null)" != "1" ]; then
+  echo "Questo è un Mac con processore Intel: Homebrew non ha pacchetti pronti" >&2
+  echo "per questi Mac e compilerebbe tutto da zero, per ore. Il setup automatico" >&2
+  echo "si ferma qui: avvisa chi ti ha mandato queste istruzioni." >&2
+  exit 1
+fi
+macos=$(sw_vers -productVersion)
+if [ "${macos%%.*}" -lt "$MIN_MACOS" ]; then
+  echo "Questo Mac ha macOS $macos, e serve almeno macOS $MIN_MACOS: sulle versioni" >&2
+  echo "più vecchie Homebrew compila tutto da zero (ore) e Docker Desktop non si installa." >&2
+  echo "Aggiorna da Impostazioni di Sistema → Generali → Aggiornamento Software," >&2
+  echo "poi rilancia lo stesso comando. Se l'aggiornamento non compare, il Mac è" >&2
+  echo "troppo vecchio: avvisa chi ti ha mandato queste istruzioni." >&2
+  exit 1
+fi
+
 # Prompts (sudo, gh login) must read from the terminal, not from the pipe.
 exec < /dev/tty
 
