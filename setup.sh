@@ -68,6 +68,9 @@ load_brew() {
   for prefix in /opt/homebrew /usr/local; do
     [ -x "$prefix/bin/brew" ] && eval "$("$prefix/bin/brew" shellenv)" && return
   done
+  # Not finding it is an answer, not a failure: under set -e a non-zero
+  # return would end the script on every Mac without Homebrew.
+  return 0
 }
 load_brew
 if ! command -v brew >/dev/null 2>&1; then
