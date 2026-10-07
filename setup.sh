@@ -98,10 +98,10 @@ command -v gh >/dev/null 2>&1 || { require_supported_mac; say "Installo GitHub C
 
 if ! gh auth status >/dev/null 2>&1; then
   say "Accedi a GitHub"
-  echo "  1. alla domanda «Authenticate Git with your GitHub credentials?» premi Invio;"
+  echo "  1. se compare la domanda «Authenticate Git with your GitHub credentials?», premi Invio;"
   echo "  2. compare un codice, già copiato negli appunti: premi Invio e si apre il browser;"
   echo "  3. nel browser accedi a GitHub, incolla il codice (⌘V) e autorizza."
-  gh auth login --web --git-protocol https --hostname github.com
+  gh auth login --web --clipboard --git-protocol https --hostname github.com
 fi
 gh auth setup-git
 

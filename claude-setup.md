@@ -47,7 +47,7 @@ Prima di farglielo lanciare, dille cosa vedrà, in quest'ordine:
 2. Homebrew chiede di premere **Invio** e poi la **password del Mac** (mentre la
    scrive non compare nulla: è normale). Alla fine elenca dei «Next steps» in
    inglese: non servono, li fa lo script;
-3. il login a GitHub: alla domanda «Authenticate Git…» premere **Invio**;
+3. il login a GitHub: se compare la domanda «Authenticate Git…», premere **Invio**;
    compare un codice già copiato negli appunti, **Invio** apre il browser, lì si
    accede a GitHub, si incolla il codice e si autorizza;
 4. l'installazione di Docker Desktop: al primo avvio accettare le condizioni
