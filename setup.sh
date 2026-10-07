@@ -62,9 +62,19 @@ if ! xcode-select -p >/dev/null 2>&1; then
   until xcode-select -p >/dev/null 2>&1; do sleep 5; done
 fi
 
+# A shell that is not a login shell has no Homebrew on PATH even when it is
+# installed: look in its standard prefixes before deciding to install it.
+load_brew() {
+  for prefix in /opt/homebrew /usr/local; do
+    [ -x "$prefix/bin/brew" ] && eval "$("$prefix/bin/brew" shellenv)" && return
+  done
+}
+load_brew
 if ! command -v brew >/dev/null 2>&1; then
   require_supported_mac
-  say "Installo Homebrew (ti chiederà la password del Mac)"
+  say "Installo Homebrew"
+  echo "Ti chiederà di premere Invio e poi la password del Mac: mentre la scrivi"
+  echo "non compare nulla, è normale."
   # Pinned to a commit and checked against its hash before it runs: HEAD of
   # Homebrew/install is whatever that repo serves today. To bump, take a new
   # commit and `shasum -a 256` of its install.sh.
@@ -76,15 +86,18 @@ if ! command -v brew >/dev/null 2>&1; then
     || { echo "L'installer di Homebrew non corrisponde all'hash atteso: mi fermo." >&2; exit 1; }
   /bin/bash "$installer"
   rm -f "$installer"
+  load_brew
+  echo
+  echo "Homebrew qui sopra elenca dei «Next steps»: non serve farli, ci pensa questo script."
 fi
-for prefix in /opt/homebrew /usr/local; do
-  [ -x "$prefix/bin/brew" ] && eval "$("$prefix/bin/brew" shellenv)" && break
-done
 
 command -v gh >/dev/null 2>&1 || { require_supported_mac; say "Installo GitHub CLI"; brew install gh; }
 
 if ! gh auth status >/dev/null 2>&1; then
-  say "Accedi a GitHub: si apre il browser, conferma il codice che vedi qui"
+  say "Accedi a GitHub"
+  echo "  1. alla domanda «Authenticate Git with your GitHub credentials?» premi Invio;"
+  echo "  2. compare un codice, già copiato negli appunti: premi Invio e si apre il browser;"
+  echo "  3. nel browser accedi a GitHub, incolla il codice (⌘V) e autorizza."
   gh auth login --web --git-protocol https --hostname github.com
 fi
 gh auth setup-git

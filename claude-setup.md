@@ -42,13 +42,17 @@ curl -fsSL https://raw.githubusercontent.com/DiscenTech/setup/main/setup.sh | ba
 
 Prima di farglielo lanciare, dille cosa vedrà, in quest'ordine:
 
-1. una finestra di Apple: cliccare **Installa** e aspettare (anche 10 minuti);
-2. la richiesta della **password del Mac** (mentre la scrive non compare nulla:
-   è normale);
-3. un **codice** nel Terminale e il browser che si apre su GitHub: incollare il
-   codice e autorizzare;
+1. forse una finestra di Apple: cliccare **Installa** e aspettare (anche 10
+   minuti). Se gli strumenti ci sono già, non compare;
+2. Homebrew chiede di premere **Invio** e poi la **password del Mac** (mentre la
+   scrive non compare nulla: è normale). Alla fine elenca dei «Next steps» in
+   inglese: non servono, li fa lo script;
+3. il login a GitHub: alla domanda «Authenticate Git…» premere **Invio**;
+   compare un codice già copiato negli appunti, **Invio** apre il browser, lì si
+   accede a GitHub, si incolla il codice e si autorizza;
 4. l'installazione di Docker Desktop: al primo avvio accettare le condizioni
-   nella sua finestra.
+   nella sua finestra; l'accesso a un account Docker e il questionario si
+   possono saltare.
 
 Lo script è sicuro da rilanciare: se si interrompe, si rilancia lo stesso
 comando e riparte da dove serve. Chiedile di dirti quando ha finito, o di
