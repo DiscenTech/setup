@@ -13,9 +13,19 @@ set -euo pipefail
 {
 
 REPO="DiscenTech/pelion"
-DIR="${PELION_DIR:-$HOME/pelion}"
 
 say() { printf '\n\033[1m▸ %s\033[0m\n' "$*"; }
+
+# ~/Developer, not Documents: iCloud can sync Documents, and node_modules,
+# .git and the local storage volume do not survive its sync and "Optimise Mac
+# Storage". A clone from before this default stays where it is.
+if [ -n "${PELION_DIR:-}" ]; then
+  DIR="$PELION_DIR"
+elif [ -d "$HOME/pelion/.git" ]; then
+  DIR="$HOME/pelion"
+else
+  DIR="$HOME/Developer/pelion"
+fi
 
 if [ "$(uname -s)" != "Darwin" ]; then
   echo "Questo script è per macOS. Su Linux: installa git, gh e Docker, poi" >&2

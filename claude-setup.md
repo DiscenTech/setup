@@ -29,7 +29,11 @@ Senza installare niente, controlla e riassumi in una tabella breve:
 - `gh auth status` — GitHub CLI e login
 - `docker info` — Docker installato e acceso
 - `node -v` — Node
-- `ls ~/pelion/scripts/bootstrap.sh` — il repo clonato
+- `ls ~/Developer/pelion/scripts/bootstrap.sh ~/pelion/scripts/bootstrap.sh` —
+  il repo clonato. Lo script lo mette in `~/Developer/pelion`, oppure lo lascia
+  in `~/pelion` se c'era già da prima. Da qui in avanti `<pelion>` è la
+  cartella che trovi: nei comandi e nei messaggi a lei scrivi il percorso vero,
+  non `<pelion>`
 
 ## 2. Se mancano strumenti di Apple, Homebrew, gh o il login
 
@@ -61,12 +65,12 @@ incollarti le ultime righe se compare un errore in rosso.
 ## 3. Se gli strumenti ci sono già
 
 Se Docker manca, installarlo chiede la password del Mac: in quel caso chiedile
-di lanciare lei, nel Terminale, `bash ~/pelion/scripts/bootstrap.sh`. Altrimenti
+di lanciare lei, nel Terminale, `bash <pelion>/scripts/bootstrap.sh`. Altrimenti
 lancialo tu. Se si ferma su qualcosa che richiede lei (Docker da aprire), spiegale
 cosa fare e rilancia.
 
-Se `~/pelion` esiste ma `scripts/bootstrap.sh` no, il repo è più vecchio del
-flusso di setup: prova `git -C ~/pelion pull`; se manca ancora, fermati e dille
+Se `<pelion>` esiste ma `scripts/bootstrap.sh` no, il repo è più vecchio del
+flusso di setup: prova `git -C <pelion> pull`; se manca ancora, fermati e dille
 di avvisare chi le ha mandato queste istruzioni.
 
 ## 4. Quando qualcosa va storto
@@ -88,7 +92,7 @@ Non aggirare un errore che non capisci: descrivilo e chiedi.
 ## 5. Verifica che funzioni
 
 Quando `bootstrap.sh` finisce senza errori, avvia l'app community in
-background da `~/pelion`:
+background da `<pelion>`:
 
 ```bash
 pnpm infra:up && pnpm --filter @pelion/community dev
@@ -100,6 +104,95 @@ browser), la sua email, poi la casella anti-bot da spuntare — in locale compar
 sempre, è una chiave di test. Il codice a sei cifre **non arriva per email**: è
 nel log del server, nella riga `[email]`. Cercalo tu e daglielo.
 
+## 6. Presentala alle sessioni future
+
+Le prossime sessioni di Claude su pelion non leggeranno queste istruzioni:
+leggono quelle del repo, scritte per sviluppatori. Perché sappiano con chi
+parlano e quanto spiegare, costruisci con lei un profilo. Dille prima a cosa
+serve, e che non è un esame: serve a Claude per sapere quanto fare da solo e
+quanto raccontare.
+
+Chiedile come si chiama e di cosa si occupa in Discentis. Poi non chiederle
+quanto si sente sicura: mostrale **un esempio per argomento, uno per volta**,
+e chiedile cosa ne capisce. «Non ne ho idea» è una risposta buona quanto le
+altre, e diglielo prima di cominciare.
+
+| Argomento | Esempio | Domanda |
+|---|---|---|
+| Terminale | `cd Documents && ls` | Cosa pensi che succeda se lo scrivo nel Terminale? |
+| Git e branch | «Ho fatto la modifica su un branch» | Cosa vuol dire, per il sito che vedono gli utenti? |
+| Pull request e review | «Sulla tua pull request c'è un commento: "qui usa il token, non il colore"; e un controllo automatico è rosso» | Cosa fai adesso? Il sito è già cambiato? |
+| Issue e board | «Una issue in "Todo", priorità alta, senza iterazione» | Cosa ti dice su quando verrà fatta? |
+| HTML e CSS | `<button class="primario">Iscriviti</button>` e `.primario { padding: 12px 24px; }` | Cosa cambieresti per fare il bottone più grande? |
+| TypeScript e React | `{utente.iscritto ? <Badge>Membro</Badge> : <Button>Iscriviti</Button>}` | Cosa vede chi apre la pagina? |
+| Design system | `color: var(--color-text-muted)` accanto a `color: #999` | Perché nel progetto si scrive il primo e non il secondo? |
+| Decisioni di prodotto (PDR) | «Una PDR ha le sezioni Decisione, Come lo misuriamo, Domande aperte» | Cosa scriveresti in Domande aperte? |
+| Metriche e PostHog | «Un funnel da "pagina vista" a "iscrizione completata" segna 4%» | Cosa ti dice, e cosa guarderesti dopo? |
+| Come è fatto pelion | «Il testo del bottone Accedi va cambiato in tutte le lingue» | Dove andresti a cercarlo? |
+
+Dopo ogni risposta, una riga su cosa fa davvero l'esempio, senza voti. Dalla
+risposta ricavi il livello:
+
+- non lo riconosce → *mai usato*;
+- coglie il senso ma non saprebbe metterci le mani → *lo conosco*;
+- lo spiega e saprebbe cambiarlo → *in autonomia*.
+
+Gli esempi sono dieci: se si stanca, fermatevi, scrivi il profilo con quelli
+fatti e dille che il resto si completa la prossima volta con «aggiorna il mio
+profilo».
+
+Alla fine chiedile, con una domanda aperta, se c'è qualcosa fra questi
+argomenti che le piacerebbe imparare a fare da sé: su quelli le prossime
+sessioni le faranno fare i passi con Claude accanto, invece di farli al posto
+suo.
+
+Mostrale la tabella dei livelli che hai ricavato e lascia che la corregga:
+l'ultima parola sul profilo è sua. Se è *in autonomia* su tutto, il profilo
+non serve: salta il resto del passo. Altrimenti aggiungi in fondo a
+`~/.claude/CLAUDE.md` (crealo se manca; se esiste, non toccare quello che c'è
+già) il blocco con i livelli concordati:
+
+```markdown
+# Chi sono
+
+Mi chiamo <nome> e in Discentis mi occupo di <ruolo>.
+
+| Argomento | Livello | Voglio impararlo |
+|---|---|---|
+| Terminale | <livello> | <sì/no> |
+| Git e branch | <livello> | <sì/no> |
+| Pull request e review | <livello> | <sì/no> |
+| Issue e board | <livello> | <sì/no> |
+| HTML e CSS | <livello> | <sì/no> |
+| TypeScript e React | <livello> | <sì/no> |
+| Design system | <livello> | <sì/no> |
+| Decisioni di prodotto (PDR) | <livello> | <sì/no> |
+| Metriche e PostHog | <livello> | <sì/no> |
+| Come è fatto pelion | <livello> | <sì/no> |
+
+Già visto: —
+
+@<pelion>/docs/profilo-di-confidenza.md
+```
+
+Dove il livello è *in autonomia*, nella colonna «Voglio impararlo» va `—`.
+Mostrale il blocco prima di scriverlo, e dille che può cambiarlo quando vuole
+chiedendo a Claude «aggiorna il mio profilo». Dille anche che non deve
+studiare niente adesso: le sessioni future le spiegheranno le cose la prima
+volta che le incontra lavorando, una per volta, e la riga «Già visto» tiene
+traccia di quelle già spiegate.
+
+## 7. Dove ritrovare pelion
+
+Dille dove sta il progetto con il nome che vede nel Finder: nella cartella
+Inizio, quella con il suo nome, che il Finder apre con ⌘ + ⇧ + H, c'è
+**Developer → pelion** (o direttamente `pelion`, se il repo era già lì). Se
+vuole averla a portata di mano, può trascinare la cartella nella barra
+laterale del Finder.
+Spiegale come aprirlo dall'app Claude: quando l'app le chiede la cartella del
+progetto, la sceglie da lì, e dopo la prima volta l'app la ricorda fra le
+recenti.
+
 Chiudi con un riepilogo di tre righe: cosa è installato, come riavviare l'app
-(`cd ~/pelion && pnpm dev`), e che `bash ~/pelion/scripts/bootstrap.sh` è il
+(`cd <pelion> && pnpm dev`), e che `bash <pelion>/scripts/bootstrap.sh` è il
 comando da lanciare quando qualcosa smette di funzionare.

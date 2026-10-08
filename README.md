@@ -7,7 +7,8 @@ curl -fsSL https://raw.githubusercontent.com/DiscenTech/setup/main/setup.sh | ba
 ```
 
 Installa gli strumenti da riga di comando di Apple, Homebrew e GitHub CLI,
-fa il login a GitHub nel browser, clona Pelion in ~/pelion e prosegue con
+fa il login a GitHub nel browser, clona Pelion in ~/Developer/pelion (o lo
+lascia in ~/pelion se c'era già) e prosegue con
 `scripts/bootstrap.sh` del repo.
 
 ## Con Claude Code
