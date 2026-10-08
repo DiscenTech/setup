@@ -182,7 +182,26 @@ studiare niente adesso: le sessioni future le spiegheranno le cose la prima
 volta che le incontra lavorando, una per volta, e la riga «Già visto» tiene
 traccia di quelle già spiegate.
 
-## 7. Dove ritrovare pelion
+## 7. Gli strumenti PostHog
+
+Le metriche del prodotto stanno su PostHog, nel progetto **App Pelion**, e
+Claude le legge con il plugin `posthog@claude-plugins-official`. Chiedile se le
+servono — se lavora su contenuti, prodotto o marketing, sì. In quel caso
+abilitalo nelle sue impostazioni personali, `~/.claude/settings.json`:
+aggiungi la chiave senza toccare il resto del file (crealo se manca).
+
+```bash
+f=~/.claude/settings.json; [ -f "$f" ] || echo '{}' > "$f"
+jq '.enabledPlugins["posthog@claude-plugins-official"] = true' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+```
+
+Il plugin si scarica e si carica dalla **prossima** sessione, non in questa.
+Dille cosa succederà la prima volta che le servono i numeri: Claude le darà
+un link, lei accede a PostHog nel browser e autorizza. Per accedere le serve
+un account PostHog con accesso al progetto App Pelion: se non ce l'ha, deve
+chiedere l'invito a chi le ha mandato queste istruzioni.
+
+## 8. Dove ritrovare pelion
 
 Dille dove sta il progetto con il nome che vede nel Finder: nella cartella
 Inizio, quella con il suo nome, che il Finder apre con ⌘ + ⇧ + H, c'è
