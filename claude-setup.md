@@ -86,6 +86,10 @@ Leggi l'errore prima di proporre altro. I casi noti:
   installato con Homebrew): chiedi prima di fermarlo (`brew services stop postgresql`).
 - **Docker non risponde** — va aperto dalle Applicazioni e lasciato partire.
 - **`Serve Node …`** — basta aprire un Terminale nuovo e rilanciare.
+- **«Registrazioni momentaneamente chiuse»** nell'app — mancano i testi legali
+  locali: rilancia `bash <pelion>/scripts/bootstrap.sh`, che li pubblica e
+  aggiunge `LEGAL_PUBLIC_BASE_URL` a `apps/community/.env` se manca, poi
+  riavvia l'app. Non serve chiedere il valore a nessuno.
 
 Non aggirare un errore che non capisci: descrivilo e chiedi.
 
